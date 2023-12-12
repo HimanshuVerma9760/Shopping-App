@@ -2,12 +2,12 @@ const http = require("http");
 
 const express = require("express");
 
-const shop = require("./routes/shop");
-const admin = require("./routes/admin");
+const shop=require('./routes/Application/shop');
+const addProduct=require('./routes/Application/add-product');
 
 const app = express();
 
-app.use(admin);
+app.use(addProduct);
 app.use(shop);
 
 http.createServer(app);
