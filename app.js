@@ -8,6 +8,9 @@ const addProduct = require("./routes/Application/add-product");
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
