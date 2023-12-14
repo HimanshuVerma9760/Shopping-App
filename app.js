@@ -8,13 +8,12 @@ const addProduct = require("./routes/Application/add-product");
 
 const app = express();
 
-app.set('view engine', 'pug');
-app.set('views');
+app.set("view engine", "pug");
+app.set("views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-app.use(addProduct.routes);
+app.use(addProduct);
 app.use(shop);
 
 http.createServer(app);

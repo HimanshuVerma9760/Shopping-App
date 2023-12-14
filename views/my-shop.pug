@@ -2,7 +2,7 @@ doctype html
 html(lang="en")
     head
         meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
         title #{docTitle}
     body 
         header 
@@ -12,6 +12,11 @@ html(lang="en")
                         a(href="/") shop 
                     li 
                         a(href="/add-product") Add-Product 
-
         main 
-            h1 Product:
+            if prods.length > 0
+                h1 Product:
+                    each product in prods
+                        p #{product.title}
+            else 
+                h1 No Products
+            

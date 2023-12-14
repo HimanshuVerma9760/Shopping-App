@@ -1,11 +1,9 @@
 const express = require("express");
-// const path = require("path");
-const productData = require("./add-product");
+
+const shopCon = require("../../controllers/product-control");
 
 const routes = express.Router();
 
-routes.get("/", (req, res, next) => {
-  res.render("my-shop", { prods: productData.products, docTitle: "My-Shop" });
-});
+routes.get("/", shopCon.shopProdGet);
 
 module.exports = routes;
