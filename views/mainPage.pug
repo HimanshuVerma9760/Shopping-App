@@ -6,6 +6,7 @@ html(lang="en")
         title My-Shop
         link(rel="import" href="/public/nav.html")
         link(rel="stylesheet" href="/css/style.css")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia")
     body 
         header 
             include ../public/nav.html
@@ -25,6 +26,6 @@ html(lang="en")
                                 .btnCss 
                                     button.btn.btn-primary(type="submit") Add to Cart 
                                     button.btn.btn-primary(type="submit") Buy now
-                                    a.btn.btn-primary(href="/admin/delete-item") delete
+                                    a.btn.btn-primary(href="/admin/delete-item") Remove
             else 
                 h1 No Books to Show!!
