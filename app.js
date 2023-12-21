@@ -3,7 +3,8 @@ const path = require("path");
 const express = require("express");
 const shopMainPage = require("./routes/main-page");
 const addProduct = require("./routes/add-product");
-const deletePage=require('./routes/admin/delete-item');
+const proDet = require("./routes/user/details-product");
+const myCart = require("./routes/user/add-to-cart");
 
 const bodyParser = require("body-parser");
 
@@ -16,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(myCart);
+app.use(proDet);
 app.use(addProduct);
-app.use(deletePage);
 app.use(shopMainPage);
 
 http.createServer(app);

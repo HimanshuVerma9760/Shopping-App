@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Products-Cart
+        link(rel="stylesheet" href="../css/style.css")
+    body 
+        header 
+            include ../public/nav.html
+        main 
+            if cartItems.length > 0
+                for prods in cartItems 
+                    .format
+                        .products
+                            img.image(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwDci-gzNUitwZChCrr7CtBTUjL6zrkrDgecY8y0tiU31pWGTtQbiVlG-QwjhIFnuTUU&usqp=CAU" alt="Book1")               
+                            .cardCont.container
+                                .text
+                                b Title:
+                                p #{prods.title}
+                                b Author:
+                                p #{prods.author}
+                                b Price:
+                                p #{prods.price}
+                                form(action="/buy-product" method="post") 
+                                    button.btn.btn-primary(type="submit") Buy
+            else 
+                h1 Add Items to Cart...!!!

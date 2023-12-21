@@ -17,15 +17,17 @@ html(lang="en")
                     content.bookStyle.container-fluid
                         .products
                             img.image(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwDci-gzNUitwZChCrr7CtBTUjL6zrkrDgecY8y0tiU31pWGTtQbiVlG-QwjhIFnuTUU&usqp=CAU" alt="Book1") 
-                            .cardCont 
-                                .text 
-                                b Title: 
-                                p #{book.title}
-                                b Author: 
-                                p Robert Greene
-                                .btnCss 
-                                    button.btn.btn-primary(type="submit") Add to Cart 
-                                    button.btn.btn-primary(type="submit") Buy now
-                                    a.btn.btn-primary(href="/admin/delete-item") Remove
+                            .cardCont
+                                form(action=`/add-to-cart/${book.id}`, method="post") 
+                                    .text 
+                                    b Title: 
+                                    p #{book.title}
+                                    b Author: 
+                                    p #{book.author}
+                                    b Price: 
+                                    p #{book.price}
+                                    .btnCss 
+                                        button.btn.btn-primary(type="submit") Add to Cart 
+                                        a.btn.btn-primary(href=`/user/details-product/${book.id}`) Details 
             else 
                 h1 No Books to Show!!
