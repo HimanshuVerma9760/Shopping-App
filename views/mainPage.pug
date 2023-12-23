@@ -10,7 +10,8 @@ html(lang="en")
     body 
         header 
             include ../public/nav.html
-            h1 This is My Book Shop
+            store 
+                h1 National-Book-House
         main 
             if Books.length > 0
                 each book in Books
@@ -30,4 +31,5 @@ html(lang="en")
                                         button.btn.btn-primary(type="submit") Add to Cart 
                                         a.btn.btn-primary(href=`/user/details-product/${book.id}`) Details 
             else 
-                h1 No Books to Show!!
+                .notice
+                    h1 No Books to Show!!

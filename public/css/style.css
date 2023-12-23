@@ -7,11 +7,20 @@ header {
   flex-direction: column;
   text-align: center;
 }
-header h1 {
+header store h1 {
+  font-family: "Courier New", Courier, monospace;
+  margin: 10px 20% 0 20%;
+  border: transparent;
+  border-radius: 35px;
+  box-shadow: 5px 6px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: rgb(172, 215, 253);
+  background-color: rgb(159, 240, 222);
+}
+.notice {
+  text-align: center;
+  h1 {
+    font-size: medium;
+  }
 }
 .products {
   margin: auto;
