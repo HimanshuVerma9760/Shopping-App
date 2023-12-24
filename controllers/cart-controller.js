@@ -1,12 +1,11 @@
 const Cart = require("../models/Cart-model");
-const Products = require("../models/product-model");
+const path = require("path");
 
 exports.cartController = (req, res, next) => {
-  Cart.cart.addCartItem(Products.fetchAll(), req.params.itemId);
-  this.cart(req, res, next);
+  Cart.cart.addProduct(req.params.itemId);
+  const myCart = Cart.cart.getCartItem();
+  res.render("my-cart", { cartItems: myCart });
 };
 exports.cart = (req, res, next) => {
-  const myCart = Cart.cart.getCartItem();
-  console.log(myCart);
-  res.render("my-cart", { cartItems: myCart });
+  res.render("my-cart");
 };

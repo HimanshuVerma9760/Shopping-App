@@ -24,5 +24,6 @@ html(lang="en")
                                 p #{prods.price}
                                 form(action="/buy-product" method="post") 
                                     button.btn.btn-primary(type="submit") Buy
+                                    b Qty: #{prods.qty}
             else 
                 h1 Add Items to Cart...!!!

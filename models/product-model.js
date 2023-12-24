@@ -7,6 +7,7 @@ module.exports = productModel = class Product {
     this.title = name;
     this.author = author;
     this.price = price;
+    this.qty = 1;
   }
 
   save() {
@@ -23,7 +24,6 @@ module.exports = productModel = class Product {
     );
   }
 
- 
   static fetchAll() {
     return products;
   }
