@@ -21,13 +21,11 @@ html(lang="en")
                                 img.image(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwDci-gzNUitwZChCrr7CtBTUjL6zrkrDgecY8y0tiU31pWGTtQbiVlG-QwjhIFnuTUU&usqp=CAU" alt="Book1") 
                                 .cardCont
                                     form(action=`/add-to-cart/${book.id}`, method="post") 
-                                        .text 
-                                        b Title: 
-                                        p #{book.title}
-                                        b Author: 
-                                        p #{book.author}
-                                        b Price: 
-                                        p #{book.price}
+                                        .bookName
+                                            b
+                                                a(style="text-decoration: none", href=`/user/details-product/${book.id}`) #{book.title}
+                                                p(style="margin:0") by #{book.author}
+                                        p M.R.P. #{book.price}
                                         .btnCss 
                                             button.btn(type="submit") Add to Cart 
                                             a.btn(href=`/user/details-product/${book.id}`) Details 

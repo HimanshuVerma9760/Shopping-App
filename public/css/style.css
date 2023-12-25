@@ -22,6 +22,15 @@ header store h1 {
     font-size: medium;
   }
 }
+.bookName:hover{
+  cursor: pointer;
+}
+.bookName a {
+  color: black;
+}
+.bookName  a:hover {
+  color: black;
+}
 .products {
   display: flex;
   flex-direction: row;
@@ -32,7 +41,7 @@ header store h1 {
 .products p {
   padding: 5px;
   margin: 10px;
-  text-align: center;
+  /* text-align: center; */
 }
 .cardCont {
   padding: 2px 16px;
@@ -55,7 +64,6 @@ header store h1 {
 .btn:hover {
   margin: 5px;
   background-color: rgb(220, 235, 9);
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   transition: 0.1s;
 }
 .format {
@@ -68,16 +76,20 @@ header store h1 {
 .discription {
   max-width: 50%;
 }
-.actions p {
+.actions b {
   text-align: center;
+  border: 1px solid rgb(224, 224, 233);
+  border-radius: 5px;
+  box-shadow: 0 4px 5px 0 rgba(31, 30, 30, 0.2);
+  background-color: rgb(244, 241, 247);
+  padding: 5px 15px 5px 15px;
 }
 .section {
   display: flex;
 }
-.totalCart{
+.totalCart {
   padding: 20px;
   width: 30%;
   margin: 10px;
   background-color: white;
 }
-

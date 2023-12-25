@@ -12,14 +12,13 @@ html(lang="en")
             .content.container.bookStyle
                 .format
                     .products
-                        img.image(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwDci-gzNUitwZChCrr7CtBTUjL6zrkrDgecY8y0tiU31pWGTtQbiVlG-QwjhIFnuTUU&usqp=CAU" alt="Book1")               
-                        .cardCont.container
-                            .text
-                            b Title:
-                            p #{product.title}
-                            b Author:
-                            p #{product.author}
-                            b Price:
-                            p #{product.price}
+                        if (product.length) > 0
+                            img.image(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwDci-gzNUitwZChCrr7CtBTUjL6zrkrDgecY8y0tiU31pWGTtQbiVlG-QwjhIFnuTUU&usqp=CAU" alt="Book1")               
+                            .cardCont.container
+                                p #{product.title}
+                                p #{product.author}
+                                p #{product.price}
+                        else
+                            h3 Temporarily Unavailable
                     .discription 
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto nesciunt reprehenderit, culpa excepturi provident aperiam adipisci quidem facilis iusto id quod, tempora, laudantium fugiat illo sapiente! Nisi sed culpa corrupti.
