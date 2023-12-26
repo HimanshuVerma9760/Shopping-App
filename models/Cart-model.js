@@ -2,6 +2,7 @@ const path = require("path");
 const p = path.join(__dirname, "..", "/file/Cart.json");
 const fs = require("fs");
 const Product = require("./product-model");
+const Cart = require("../controllers/cart-controller");
 
 exports.cart = class myCart {
   static addProduct(itemId) {
