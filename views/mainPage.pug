@@ -18,7 +18,7 @@ html(lang="en")
                     each book in Books
                         content.bookStyle.container-fluid
                             .products
-                                img.image(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVwDci-gzNUitwZChCrr7CtBTUjL6zrkrDgecY8y0tiU31pWGTtQbiVlG-QwjhIFnuTUU&usqp=CAU" alt="Book1") 
+                                img.image(src=`${book.imgurl}` alt="Book1") 
                                 .cardCont
                                     form(action=`/add-to-cart/${book.id}`, method="post") 
                                         .bookName

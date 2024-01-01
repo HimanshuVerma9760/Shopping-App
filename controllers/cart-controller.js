@@ -25,25 +25,29 @@ function gettingPrice() {
 
 exports.cartController = (req, res, next) => {
   Cart.cart.addProduct(req.params.itemId);
-  const myCart = Cart.cart.getCartItem();
-  subTotal = gettingPrice();
-  res.render("my-cart", {
-    cartItems: myCart,
-    totalPrice: subTotal,
-    noOfItems,
-  });
+  Cart.cart
+    .getCartItem()
+    .then(() => {
+      // subTotal = gettingPrice();
+      // res.render("my-cart", {
+      //   cartItems: rows,
+      //   totalPrice: subTotal,
+      //   noOfItems,
+      // });
+      res.redirect("/add-to-cart");
+    })
+    .catch((err) => console.log(err));
 };
 exports.cart = (req, res, next) => {
-  let myCart = Cart.cart.getCartItem();
-  if (req.params.itemId) {
-    let product = myCart.filter((prod) => prod.id !== req.params.itemId);
-    fs.writeFileSync(p, JSON.stringify(product));
-    myCart = Cart.cart.getCartItem();
-  }
-  subTotal = gettingPrice();
-  res.render("my-cart", {
-    cartItems: myCart,
-    totalPrice: subTotal,
-    noOfItems,
-  });
+  Cart.cart
+    .getCartItem()
+    .then(([rows, fieldData]) => {
+      subTotal = gettingPrice();
+      res.render("my-cart", {
+        cartItems: rows,
+        totalPrice: subTotal,
+        noOfItems,
+      });
+    })
+    .catch((err) => console.log(err));
 };

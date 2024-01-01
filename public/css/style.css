@@ -48,6 +48,8 @@ header store h1 {
 }
 .image {
   padding: 10px;
+  max-width: 200px;
+  /* height: 200px; */
 }
 .image:hover {
   cursor: pointer;
