@@ -3,13 +3,10 @@ const db = require("../utils/database");
 
 exports.cart = class myCart {
   static addProduct(itemId) {
-    let CartItem;
-
-    console.log(itemId);
-    // let CartItem;
+    //adding Product to cart
     Product.fetchAll()
       .then(([rows, fieldData]) => {
-        CartItem = rows.find((prod) => prod.id == itemId);
+        let CartItem = rows.find((prod) => prod.id == itemId);
         const title = CartItem.title;
         const author = CartItem.author;
         const imgurl = CartItem.imgurl;
@@ -20,11 +17,12 @@ exports.cart = class myCart {
           "INSERT INTO cart (`title`, `author`, `imgurl`, `price`, `qty`, `prodId`) VALUES (?, ?, ?, ?, ?, ?)",
           [title, author, imgurl, price, qty, prodId]
         );
-        // console.log(CartItem);
       })
       .catch((err) => console.log(err));
   }
-
+  static remove(id) {
+    return db.execute(`DELETE FROM cart where prodId=${id}`);
+  }
   static getCartItem() {
     return db.execute("SELECT * FROM cart");
   }

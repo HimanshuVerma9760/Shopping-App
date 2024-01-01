@@ -26,7 +26,7 @@ html(lang="en")
                                         p M.R.P. #{prods.price}
                                             .actions 
                                                 b Qty: #{prods.qty}
-                                                a.btn(href=`/add-to-cart/${prods.id}`) Remove
+                                                a.btn(href=`/add-to-cart/${prods.prodId}`) Remove
                         div.totalCart
                             form(action="" method="post") 
                                 h3(style="font-size: 20px") Subtotal #{noOfItems} items : 

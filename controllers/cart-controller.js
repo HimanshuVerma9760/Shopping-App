@@ -1,8 +1,5 @@
-const fs = require("fs");
-const path = require("path");
 const Cart = require("../models/Cart-model");
-const p = path.join(__dirname, "..", "/file/Cart.json");
-
+const db = require("../utils/database");
 let subTotal = 0;
 let addPrice = true;
 let noOfItems = 0;
@@ -23,31 +20,57 @@ function gettingPrice() {
   return total;
 }
 
+checkCart = (itemId) => {};
+
 exports.cartController = (req, res, next) => {
-  Cart.cart.addProduct(req.params.itemId);
+  let itemId = req.params.itemId;
+  let addProduct = true;
   Cart.cart
     .getCartItem()
-    .then(() => {
-      // subTotal = gettingPrice();
-      // res.render("my-cart", {
-      //   cartItems: rows,
-      //   totalPrice: subTotal,
-      //   noOfItems,
-      // });
-      res.redirect("/add-to-cart");
+    .then(([row, fieldData]) => {
+      row.forEach((prods) => {
+        let itemQty = prods.qty;
+        if (prods.prodId == itemId) {
+          itemQty++;
+          addProduct = false;
+          return db.execute(
+            `UPDATE cart SET qty=${itemQty} WHERE prodId=${itemId}`
+          );
+        }
+      });
+      if (addProduct) {
+        Cart.cart.addProduct(itemId);
+        res.redirect("/add-to-cart");
+        res.redirect("/add-to-cart");
+      }
     })
     .catch((err) => console.log(err));
+  // Cart.cart
+  //   .getCartItem()
+  //   .then(() => {
+  //     res.redirect("/add-to-cart");
+  //   })
+  //   .catch((err) => console.log(err));
 };
 exports.cart = (req, res, next) => {
-  Cart.cart
-    .getCartItem()
-    .then(([rows, fieldData]) => {
-      subTotal = gettingPrice();
-      res.render("my-cart", {
-        cartItems: rows,
-        totalPrice: subTotal,
-        noOfItems,
-      });
-    })
-    .catch((err) => console.log(err));
+  if (req.params.prodId) {
+    Cart.cart
+      .remove(req.params.prodId)
+      .then(() => {
+        res.redirect("/add-to-cart");
+      })
+      .catch((err) => console.log(err));
+  } else {
+    Cart.cart
+      .getCartItem()
+      .then(([rows, fieldData]) => {
+        subTotal = gettingPrice();
+        res.render("my-cart", {
+          cartItems: rows,
+          totalPrice: subTotal,
+          noOfItems,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
 };
