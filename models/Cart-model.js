@@ -1,29 +1,27 @@
-const Product = require("./product-model");
-const db = require("../utils/database");
+const { default: mongoose } = require("mongoose");
 
-exports.cart = class myCart {
-  static addProduct(itemId) {
-    //adding Product to cart
-    Product.fetchAll()
-      .then(([rows, fieldData]) => {
-        let CartItem = rows.find((prod) => prod.id == itemId);
-        const title = CartItem.title;
-        const author = CartItem.author;
-        const imgurl = CartItem.imgurl;
-        const price = CartItem.price;
-        const qty = 1;
-        const prodId = CartItem.id;
-        return db.execute(
-          "INSERT INTO cart (`title`, `author`, `imgurl`, `price`, `qty`, `prodId`) VALUES (?, ?, ?, ?, ?, ?)",
-          [title, author, imgurl, price, qty, prodId]
-        );
-      })
-      .catch((err) => console.log(err));
-  }
-  static remove(id) {
-    return db.execute(`DELETE FROM cart where prodId=${id}`);
-  }
-  static getCartItem() {
-    return db.execute("SELECT * FROM cart");
-  }
-};
+const cartSchema = new mongoose.Schema({
+  products: [
+    {
+      product: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        min: 1,
+      },
+    },
+  ],
+  totalQuantity: { type: Number, default: 0 },
+  totalPrice: { type: Number, default: 0 },
+  owner: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Users",
+    required: true,
+  },
+});
+
+exports.Cart = mongoose.model("Cart", cartSchema);

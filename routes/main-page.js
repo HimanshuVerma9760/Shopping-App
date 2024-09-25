@@ -1,8 +1,8 @@
 const express = require("express");
-const mainPage = require("../controllers/product-controller");
+const { getProduct } = require("../controllers/product-controller");
 
 const mainRoute = express.Router();
 
-mainRoute.get("/", mainPage.mainPage);
+const getProductRoute = mainRoute.get("/", getProduct);
 
-module.exports = mainRoute;
+exports.getProductRoute = getProductRoute;

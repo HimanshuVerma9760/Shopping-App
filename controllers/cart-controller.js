@@ -1,76 +1,55 @@
-const Cart = require("../models/Cart-model");
-const db = require("../utils/database");
-let subTotal = 0;
-let addPrice = true;
-let noOfItems = 0;
-function gettingPrice() {
-  const cartItems = Cart.cart.getCartItem();
-  var noi = 0;
-  var total = 0;
-  for (let index = 0; index < cartItems.length; index++) {
-    total = total + Number(cartItems[index].price) * cartItems[index].qty;
-    if (Number(cartItems[index].qty) > 1) {
-      noi = Number(cartItems[index].qty) + noi;
-    } else {
-      noi++;
+const { Cart } = require("../models/Cart-model");
+const { Product } = require("../models/product-model");
+
+exports.searchCart = async (req, res, next) => {
+  const id = req.params.prodId;
+
+  try {
+    const cart = await Cart.find({ "products.product": id });
+    if (!cart) {
+      return res.json({ message: "Cart Item not found..!!" });
     }
+    const cartItem = cart.find((item) => item.products.toString() === id);
+    res.json(cartItem);
+  } catch (error) {
+    console.log(error);
   }
-  addPrice = false;
-  noOfItems = noi;
-  return total;
-}
-
-checkCart = (itemId) => {};
-
-exports.cartController = (req, res, next) => {
-  let itemId = req.params.itemId;
-  let addProduct = true;
-  Cart.cart
-    .getCartItem()
-    .then(([row, fieldData]) => {
-      row.forEach((prods) => {
-        let itemQty = prods.qty;
-        if (prods.prodId == itemId) {
-          itemQty++;
-          addProduct = false;
-          return db.execute(
-            `UPDATE cart SET qty=${itemQty} WHERE prodId=${itemId}`
-          );
-        }
-      });
-      if (addProduct) {
-        Cart.cart.addProduct(itemId);
-        res.redirect("/add-to-cart");
-        res.redirect("/add-to-cart");
-      }
-    })
-    .catch((err) => console.log(err));
-  // Cart.cart
-  //   .getCartItem()
-  //   .then(() => {
-  //     res.redirect("/add-to-cart");
-  //   })
-  //   .catch((err) => console.log(err));
 };
-exports.cart = (req, res, next) => {
-  if (req.params.prodId) {
-    Cart.cart
-      .remove(req.params.prodId)
-      .then(() => {
-        res.redirect("/add-to-cart");
-      })
-      .catch((err) => console.log(err));
+
+exports.addToCart = async (req, res, next) => {
+  const prodId = req.params.itemId;
+  const userId = req.params.uid;
+
+  const prod = await Product.findById(prodId);
+
+  const prodPrice = prod.price;
+
+  const user = await Cart.findOne({
+    owner: userId,
+  });
+
+  if (user) {
+    const productIndex = await user.findIndex(
+      (item) => item.products.toString() === prodId
+    );
+    if (productIndex > -1) {
+      user.products[productIndex].quantity++;
+      user.totalPrice += prodPrice;
+    } else {
+      user.products.push({ product: prodId, quantity: 1 });
+    }
+    user.totalQuantity++;
+    user.save();
   } else {
-    Cart.cart
-      .getCartItem()
-      .then(([rows, fieldData]) => {
-        subTotal = gettingPrice();
-        res.render("my-cart", {
-          cartItems: rows,
-          totalPrice: subTotal,
-          noOfItems,
-        });
-      })
-      .catch((err) => console.log(err));
+    const newCart = new Cart({
+      products: {
+        product: prodId,
+        quantity: 1,
+      },
+      totalQuantity: 1,
+      totalPrice: prodPrice,
+      owner: userId
+    });
+    newCart.save();
   }
 };

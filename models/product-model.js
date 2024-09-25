@@ -1,23 +1,12 @@
-const db = require("../utils/database");
+const { default: mongoose } = require("mongoose");
 
-module.exports = productModel = class Product {
-  constructor(name, author, url, price, desc) {
-    this.title = name;
-    this.author = author;
-    this.url = url;
-    this.price = price;
-    this.desc = desc;
-    this.qty = 1;
-  }
+const productSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  author: { type: String, required: true },
+  url: { type: String, required: true },
+  price: { type: Number, required: true },
+  desc: { type: String, required: true },
+  qty: { type: Number, default: 1},
+});
 
-  save() {
-    return db.execute(
-      "INSERT INTO products (`title`, `price`, `desc`, `imgurl`, `author`) VALUES(?, ?, ?, ?, ?)",
-      [this.title, this.price, this.desc, this.url, this.author, this.qty]
-    );
-  }
-
-  static fetchAll() {
-    return db.execute("SELECT * FROM products");
-  }
-};
+exports.Product = mongoose.model("Product", productSchema);

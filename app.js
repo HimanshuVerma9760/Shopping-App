@@ -1,29 +1,28 @@
-const http = require("http");
 const path = require("path");
 const express = require("express");
-const shopMainPage = require("./routes/main-page");
+const homePage = require("./routes/main-page");
 const addProduct = require("./routes/add-product");
-const proDet = require("./routes/user/details-product");
-const myCart = require("./routes/user/add-to-cart");
-const db = require("./utils/database");
+// const proDet = require("./routes/user/details-product");
+const myCart = require("./routes/user/cart-route");
 
 const bodyParser = require("body-parser");
+const db = require("./util/db_connect");
 
 const app = express();
 
-app.set("view engine", "pug");
-app.set("views");
+app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  next();
+});
 
+app.use("/cart", myCart);
+// app.use(proDet);
+app.use("/product", addProduct);
+app.use("/", homePage.getProductRoute);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use(myCart);
-app.use(proDet);
-app.use(addProduct);
-app.use(shopMainPage);
-
-http.createServer(app);
+db();
 app.listen(3000);
