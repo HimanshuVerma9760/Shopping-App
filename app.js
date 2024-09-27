@@ -1,5 +1,5 @@
-const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const homePage = require("./routes/main-page");
 const addProduct = require("./routes/add-product");
 // const proDet = require("./routes/user/details-product");
@@ -12,12 +12,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  next();
-});
+app.use(cors());
 
 app.use("/cart", myCart);
 // app.use(proDet);

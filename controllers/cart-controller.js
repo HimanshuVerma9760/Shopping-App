@@ -17,29 +17,47 @@ exports.searchCart = async (req, res, next) => {
 };
 
 exports.addToCart = async (req, res, next) => {
-  const prodId = req.params.itemId;
-  const userId = req.params.uid;
-
-  const prod = await Product.findById(prodId);
-
+  const prodId = req.body.data.itemId;
+  const userId = req.body.data.uid;
+  let prod;
+  try {
+    prod = await Product.findOne({ _id: prodId });
+  } catch (error) {
+    console.log(error);
+  }
   const prodPrice = prod.price;
-
-  const user = await Cart.findOne({
-    owner: userId,
-  });
-
-  if (user) {
-    const productIndex = await user.findIndex(
-      (item) => item.products.toString() === prodId
-    );
-    if (productIndex > -1) {
-      user.products[productIndex].quantity++;
-      user.totalPrice += prodPrice;
-    } else {
-      user.products.push({ product: prodId, quantity: 1 });
+  let userCart;
+  try {
+    userCart = await Cart.findOne({
+      owner: userId,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  let productIndex;
+  if (userCart) {
+    try {
+      productIndex = userCart.products.findIndex(
+        (item) => item.product.toString() === prodId
+      );
+    } catch (error) {
+      console.log(error);
     }
-    user.totalQuantity++;
-    user.save();
+    if (productIndex > -1) {
+      console.log("product found in the cart at: " + productIndex);
+      userCart.products[productIndex].quantity++;
+    } else {
+      userCart.products.push({ product: prodId, quantity: 1 });
+    }
+    userCart.totalPrice += prodPrice;
+    userCart.totalQuantity++;
+    let result;
+    try {
+      result = await userCart.save();
+      res.json(result);
+    } catch (error) {
+      console.log(error);
+    }
   } else {
     const newCart = new Cart({
       products: {
@@ -48,8 +66,9 @@ exports.addToCart = async (req, res, next) => {
       },
       totalQuantity: 1,
       totalPrice: prodPrice,
-      owner: userId
+      owner: userId,
     });
-    newCart.save();
+    const result = await newCart.save();
+    res.json(result);
   }
 };

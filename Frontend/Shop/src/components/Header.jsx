@@ -10,6 +10,9 @@ export default function Header() {
         <li>
           <Link to="/product">products page</Link>
         </li>
+        <li>
+          <Link to="/cart">My Cart</Link>
+        </li>
       </ul>
       <Outlet />
     </>

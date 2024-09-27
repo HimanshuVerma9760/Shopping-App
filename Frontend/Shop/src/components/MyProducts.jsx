@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function MyProducts() {
+export default function MyProducts({ uid }) {
   const [myProds, setMyProds] = useState([]);
   function getProducts() {
     fetch("http://localhost:3000/product/get-products")
@@ -12,8 +12,22 @@ export default function MyProducts() {
     getProducts();
   }, []);
 
-  function addToCart(prodId) {
-    
+  async function addToCart(prodId) {
+    const data = {
+      itemId: prodId,
+      uid: uid,
+    };
+    try {
+      await fetch("http://localhost:3000/cart/add-to-cart", {
+        method: "post",
+        body: JSON.stringify({ data }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.log("could not add to cart....!!! " + error);
+    }
   }
 
   return (
@@ -28,7 +42,9 @@ export default function MyProducts() {
                   <strong>writtern by </strong>
                   <p>{prod.author}</p>
                   <p>{prod.desc}</p>
-                  <button onClick={() => addToCart(prod._id)}></button>
+                  <button onClick={() => addToCart(prod._id)}>
+                    Add to Cart
+                  </button>
                 </li>
               ))
             : "No Products to show..!!"}
