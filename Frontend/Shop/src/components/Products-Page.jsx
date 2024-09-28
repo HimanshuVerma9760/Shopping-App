@@ -7,14 +7,11 @@ export default function ProductsPage() {
       <div className="head">
         <h1>The Shopping Wall</h1>
       </div>
-      <ul>
-        <li>
-          <Link to="get-products">Get-Product</Link>
-        </li>
+      {/* <ul>
         <li>
           <Link to="add-product">Add-Product</Link>
         </li>
-      </ul>
+      </ul> */}
       <Outlet />
     </>
   );

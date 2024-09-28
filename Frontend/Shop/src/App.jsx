@@ -20,13 +20,14 @@ export default function App() {
         {
           path: "product",
           element: <ProductsPage />,
+          //These children with seprate get and add products route are only for testing purposes...... 
           children: [
             {
               path: "get-products",
               element: <MyProducts uid={user} />,
-            },
+            },  
             {
-              path: "add-product",
+              path: "add-product", 
               element: <AddProducts />,
             },
           ],

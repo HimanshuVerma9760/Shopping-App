@@ -12,7 +12,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/product" className="links">
+            <Link to="/product/get-products" className="links">
               Products page
             </Link>
           </li>
