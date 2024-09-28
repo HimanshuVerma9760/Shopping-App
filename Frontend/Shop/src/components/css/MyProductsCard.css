@@ -1,33 +1,41 @@
-.card{
-    display: flex;
-    flex-wrap: wrap;
-    background-color: rgb(138, 138, 145);
-    text-align: center;
-    padding: 10px;
-    justify-content: center;
-    min-width: fit-content;
-}
-
-.card li{
-    padding: 10px;
-    list-style: none;
-    margin: 10px;
-    background-color: rgb(82, 82, 142);
-    border-radius: 10px;
-    box-shadow: 3px 3px 3px 3px rgb(69, 64, 64);
-    flex-wrap: wrap;
-    width: 520px;
-
-}
-.card li:hover{
-   transition: 0.3s;
-   transform: rotate(-2deg);
-}
-img{
-  min-height: 420px;
-  max-height: 420px;
-  padding: 20px;
+.card {
+  display: flex;
   flex-wrap: wrap;
-  max-width: fit-content;
-  min-width: max-content;
+  background-color: rgb(138, 138, 145);
+  text-align: center;
+  padding: 1rem; /* Use rem for better scalability */
+  justify-content: center;
+  gap: 2rem;
+}
+
+.card li {
+  padding: 1.5rem; /* Use rem for better scalability */
+  list-style: none;
+  background-color: rgb(82, 82, 142);
+  border-radius: 10px;
+  box-shadow: 3px 3px 3px 3px rgb(69, 64, 64);
+  width: 520px;
+  max-width: 100%; /* Allow cards to shrink on smaller screens */
+}
+
+.card li:hover {
+  transition: 0.3s;
+  transform: rotate(-2deg);
+}
+
+.card li img {
+  width: 100%;
+  max-width: 100%; /* Allow images to shrink */
+  height: 350px; 
+  object-fit: cover;
+}
+
+@media (max-width: 768px) { 
+  .card li {
+    width: 100%;
+  }
+
+  .card li img {
+    height: 250px; 
+  }
 }
