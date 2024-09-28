@@ -1,19 +1,28 @@
 import { Link, Outlet } from "react-router-dom";
+import "./css/Header.css";
 
 export default function Header() {
   return (
     <>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/product">products page</Link>
-        </li>
-        <li>
-          <Link to="/cart">My Cart</Link>
-        </li>
-      </ul>
+      <div className="header">
+        <ul>
+          <li>
+            <Link to="/" className="links">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/product" className="links">
+              Products page
+            </Link>
+          </li>
+          <li>
+            <Link to="/cart" className="links">
+              My Cart
+            </Link>
+          </li>
+        </ul>
+      </div>
       <Outlet />
     </>
   );

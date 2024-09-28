@@ -1,9 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
+import "./css/ProductPage.css";
 
 export default function ProductsPage() {
   return (
     <>
-      <h1>Welcome Product Page</h1>
+      <div className="head">
+        <h1>The Shopping Wall</h1>
+      </div>
       <ul>
         <li>
           <Link to="get-products">Get-Product</Link>

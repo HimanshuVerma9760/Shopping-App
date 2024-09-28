@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
+import "./css/MyProductsCard.css";
 
 export default function MyProducts({ uid }) {
   const [myProds, setMyProds] = useState([]);
-  function getProducts() {
-    fetch("http://localhost:3000/product/get-products")
-      .then((response) => response.json())
-      .then((data) => setMyProds(data))
-      .catch((err) => console.log(err));
-  }
+
   useEffect(() => {
+    function getProducts() {
+      fetch("http://localhost:3000/product/get-products")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setMyProds(data);
+        })
+        .catch((err) => console.log(err));
+    }
     getProducts();
   }, []);
 
@@ -33,11 +42,13 @@ export default function MyProducts({ uid }) {
   return (
     <>
       <div className="book-card">
-        <div>
+        <div className="card">
           {myProds.length !== 0
             ? myProds.map((prod) => (
                 <li key={prod._id}>
-                  <img src={prod.url} />
+                  <div>
+                    <img src={prod.url} />
+                  </div>
                   <h3>{prod.title + " $" + prod.price}</h3>
                   <strong>writtern by </strong>
                   <p>{prod.author}</p>

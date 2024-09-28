@@ -1,0 +1,7 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  justify-content: center;
+  text-shadow: 1px 2px 5px red;
+}
