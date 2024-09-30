@@ -6,6 +6,7 @@
   padding: 1rem; 
   justify-content: center;
   gap: 2rem;
+  border-radius: 10px;
 }
 
 .card li {
@@ -38,4 +39,8 @@
   .card li img {
     height: 250px; 
   }
+}
+
+.save-later-section{
+  margin-top: 20px;
 }

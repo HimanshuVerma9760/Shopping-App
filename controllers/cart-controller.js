@@ -1,5 +1,6 @@
 const { Cart } = require("../models/Cart-model");
 const { Product } = require("../models/product-model");
+const { SaveLater } = require("../models/save-for-later-model");
 
 exports.searchCart = async (req, res, next) => {
   const id = req.params.prodId;
@@ -70,5 +71,41 @@ exports.addToCart = async (req, res, next) => {
     });
     const result = await newCart.save();
     res.json(result);
+  }
+};
+
+exports.saveForLater = async (req, res, next) => {
+  const prodId = req.body.prodId;
+  const userId = req.params.userId;
+
+  const exsistingUser = await SaveLater.findOne({ userRefId: userId });
+  if (exsistingUser) {
+    const exsistingProd = await SaveLater.findOne({ itemRefId: prodId });
+    if (exsistingProd) {
+      res.json({ message: "Already have this product" });
+    } else {
+      exsistingUser.itemRefId.push(prodId);
+      const result = await exsistingUser.save();
+      res.json(result);
+    }
+  } else {
+    const saveLater = new SaveLater({
+      itemRefId: prodId,
+      userRefId: userId,
+    });
+    const result = await saveLater.save();
+    res.json(result);
+  }
+};
+
+exports.getSaveForLater = async (req, res, next) => {
+  const saveLaterItems = await SaveLater.findOne({
+    userRefId: req.params.userId,
+  }).populate("itemRefId");
+
+  if (saveLaterItems) {
+    res.json(saveLaterItems.itemRefId);
+  } else {
+    res.json({ message: "No Items Currently..!!" });
   }
 };

@@ -1,5 +1,10 @@
 const express = require("express");
-const { searchCart, addToCart } = require("../../controllers/cart-controller");
+const {
+  searchCart,
+  addToCart,
+  saveForLater,
+  getSaveForLater,
+} = require("../../controllers/cart-controller");
 const { showCart } = require("../../controllers/cart-all-products-controller");
 
 const route = express.Router();
@@ -7,5 +12,7 @@ const route = express.Router();
 route.get("/add-to-cart/:prodId", searchCart);
 route.get("/my-cart/:uid", showCart);
 route.post("/add-to-cart/", addToCart);
+route.post("/save-for-later/:userId", saveForLater);
+route.get("/save-for-later/:userId", getSaveForLater);
 
 module.exports = route;

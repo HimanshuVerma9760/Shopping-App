@@ -19,6 +19,7 @@ export default function MyProducts({ uid }) {
         .catch((err) => console.log(err));
     }
     getProducts();
+    return () => {};
   }, []);
 
   async function addToCart(prodId) {
