@@ -4,6 +4,12 @@ import ProductsPage from "./components/Products-Page";
 import MyProducts from "./components/MyProducts";
 import AddProducts from "./components/AddProducts";
 import Cart from "./components/Cart";
+import {
+  cartLoader,
+  productLoader,
+  saveforLater,
+} from "./components/LoaderComponent";
+import SaveForLater from "./components/SaveLater";
 
 const user = "66f44dfed6b40e6958dfbd49";
 
@@ -11,7 +17,7 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Header/>,
+      element: <Header />,
       children: [
         {
           path: "/",
@@ -20,21 +26,30 @@ export default function App() {
         {
           path: "product",
           element: <ProductsPage />,
-          //These children with seprate get and add products route are only for testing purposes...... 
+          //These children with seprate get and add products route are only for testing purposes......
           children: [
             {
               path: "get-products",
+              loader: productLoader,
               element: <MyProducts uid={user} />,
-            },  
+            },
             {
-              path: "add-product", 
+              path: "add-product",
               element: <AddProducts />,
             },
           ],
         },
         {
           path: "cart",
-          element: <Cart uid={user}/>,
+          loader: cartLoader,
+          element: <Cart uid={user} />,
+          children: [
+            {
+              path: `save-for-later/${user}`,
+              loader: saveforLater,
+              element: <SaveForLater />,
+            },
+          ],
         },
       ],
     },

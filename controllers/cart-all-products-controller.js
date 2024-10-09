@@ -5,8 +5,6 @@ exports.showCart = async (req, res, next) => {
     const cart = await Cart.findOne({ owner: req.params.uid }).populate(
       "products.product"
     );
-    // console.log("cart qty : " + cart.totalQuantity);
-    // console.log("cart Products : " + cart.products);
     const data = {
       cartQty: cart.totalQuantity,
       totalPrice: cart.totalPrice,

@@ -1,26 +1,11 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import "./css/MyProductsCard.css";
 
 export default function MyProducts({ uid }) {
-  const [myProds, setMyProds] = useState([]);
+  // const [myProds, setMyProds] = useState([]);
 
-  useEffect(() => {
-    function getProducts() {
-      fetch("http://localhost:3000/product/get-products")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setMyProds(data);
-        })
-        .catch((err) => console.log(err));
-    }
-    getProducts();
-    return () => {};
-  }, []);
+  const myProds = useLoaderData();
 
   async function addToCart(prodId) {
     const data = {
