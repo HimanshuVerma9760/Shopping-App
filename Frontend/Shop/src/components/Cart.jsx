@@ -1,13 +1,14 @@
 import "./css/MyProductsCard.css";
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, Outlet } from "react-router-dom";
 
 export default function Cart({ uid }) {
-  const cartItems = useLoaderData();
+  const { cartData } = useLoaderData();
+  const cartItems = cartData;
 
   function saveLaterHandler(prodId) {
     fetch(`http://localhost:3000/cart/save-for-later/${uid}`, {
       method: "post",
-      body: JSON.stringify(prodId),
+      body: JSON.stringify({ prodId: prodId }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -34,11 +35,9 @@ export default function Cart({ uid }) {
         <div style={style}>
           <h3>
             Total Items: {cartItems.cartQty} with $ {cartItems.totalPrice} to
-            Pay
+            Pay 
             <div>
-              <Link to={`save-for-later/${"66f44dfed6b40e6958dfbd49"}`}>
-                Save for Later
-              </Link>
+              <Link to={`/cart/my-cart/save-for-later/${uid}`}>Save For Later</Link>
             </div>
           </h3>
         </div>
@@ -62,6 +61,9 @@ export default function Cart({ uid }) {
               ))
             : "No items in the cart"}
         </div>
+      </div>
+      <div>
+      
       </div>
     </>
   );

@@ -4,11 +4,7 @@ import ProductsPage from "./components/Products-Page";
 import MyProducts from "./components/MyProducts";
 import AddProducts from "./components/AddProducts";
 import Cart from "./components/Cart";
-import {
-  cartLoader,
-  productLoader,
-  saveforLater,
-} from "./components/LoaderComponent";
+import { cartLoader, productLoader } from "./components/LoaderComponent";
 import SaveForLater from "./components/SaveLater";
 
 const user = "66f44dfed6b40e6958dfbd49";
@@ -40,16 +36,14 @@ export default function App() {
           ],
         },
         {
-          path: "cart",
+          path: "cart/my-cart",
           loader: cartLoader,
           element: <Cart uid={user} />,
-          children: [
-            {
-              path: `save-for-later/${user}`,
-              loader: saveforLater,
-              element: <SaveForLater />,
-            },
-          ],
+        },
+        {
+          path: "cart/my-cart/save-for-later/:uid",
+          loader: cartLoader,
+          element: <SaveForLater />,
         },
       ],
     },

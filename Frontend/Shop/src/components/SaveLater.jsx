@@ -2,8 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import "./css/MyProductsCard.css";
 
 export default function SaveForLater() {
-  const saveLater = useLoaderData();
-  console.log("save",saveLater);
+  const { laterItems } = useLoaderData();
 
   const style = {
     display: "flex",
@@ -16,8 +15,8 @@ export default function SaveForLater() {
       <div className="save-later-section">
         <h2 style={style}>Saved For Later</h2>
         <div className="card">
-          {saveLater.length !== 0
-            ? saveLater.map((item) => (
+          {Array.isArray(laterItems)
+            ? laterItems.map((item) => (
                 <li key={item._id}>
                   <img src={item.url} />
                   <h1>{item.title + " - $" + item.price}</h1>

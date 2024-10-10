@@ -17,7 +17,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/cart" className="links">
+            <Link to="/cart/my-cart" className="links">
               My Cart
             </Link>
           </li>

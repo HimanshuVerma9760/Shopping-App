@@ -13,6 +13,6 @@ route.get("/add-to-cart/:prodId", searchCart);
 route.get("/my-cart/:uid", showCart);
 route.post("/add-to-cart/", addToCart);
 route.post("/save-for-later/:userId", saveForLater);
-route.get("/save-for-later/:userId", getSaveForLater);
+route.get("/my-cart/save-for-later/:userId", getSaveForLater);
 
 module.exports = route;

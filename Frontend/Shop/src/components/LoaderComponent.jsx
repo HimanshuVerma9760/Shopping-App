@@ -14,23 +14,33 @@ export async function productLoader() {
 }
 
 export async function cartLoader() {
-  const response = await fetch(`http://localhost:3000/cart/my-cart/${uid}`);
-  if (!response.ok) {
+  const response1 = await fetch(`http://localhost:3000/cart/my-cart/${uid}`);
+  if (!response1.ok) {
     throw new Error("Cart Error..!!");
   }
-  const cartData = await response.json();
-  return cartData;
-}
-
-export async function saveforLater() {
-  const response = await fetch(
-    `http://localhost:3000/cart/save-for-later/${uid}`
+  const cartData = await response1.json();
+  
+  const response2 = await fetch(
+    `http://localhost:3000/cart/my-cart/save-for-later/${uid}`
   );
 
-  if (!response.ok) {
+  if (!response2.ok) {
     throw new Error("saveForLater error..!!");
   }
 
-  const laterItems = await response.json();
-  return laterItems;
+  const laterItems = await response2.json();
+  return { laterItems: laterItems, cartData: cartData };
 }
+
+// export async function saveforLater() {
+//   const response = await fetch(
+//     `http://localhost:3000/cart/my-cart/save-for-later/${uid}`
+//   );
+
+//   if (!response.ok) {
+//     throw new Error("saveForLater error..!!");
+//   }
+
+//   const laterItems = await response.json();
+//   return laterItems;
+// }

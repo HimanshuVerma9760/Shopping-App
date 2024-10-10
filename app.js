@@ -9,10 +9,9 @@ const bodyParser = require("body-parser");
 const db = require("./util/db_connect");
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
-
-app.use(cors());
 
 app.use("/cart", myCart);
 // app.use(proDet);
