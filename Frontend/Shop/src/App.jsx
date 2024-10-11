@@ -1,11 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Header from "./components/Header";
-import ProductsPage from "./components/Products-Page";
-import MyProducts from "./components/MyProducts";
-import AddProducts from "./components/AddProducts";
-import Cart from "./components/Cart";
+import React, { lazy } from "react";
+import { Suspense } from "react";
 import { cartLoader, productLoader } from "./components/LoaderComponent";
-import SaveForLater from "./components/SaveLater";
+
+const ProductsPage = lazy(() => import("./components/Products-Page"));
+const MyProducts = lazy(() => import("./components/MyProducts"));
+const AddProducts = lazy(() => import("./components/AddProducts"));
+const Cart = lazy(() => import("./components/Cart"));
+const SaveForLater = lazy(() => import("./components/SaveLater"));
 
 const user = "66f44dfed6b40e6958dfbd49";
 
@@ -21,29 +24,48 @@ export default function App() {
         },
         {
           path: "product",
-          element: <ProductsPage />,
-          //These children with seprate get and add products route are only for testing purposes......
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <ProductsPage />
+            </Suspense>
+          ),
           children: [
             {
               path: "get-products",
               loader: productLoader,
-              element: <MyProducts uid={user} />,
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MyProducts uid={user} />
+                </Suspense>
+              ),
             },
             {
               path: "add-product",
-              element: <AddProducts />,
+              element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <AddProducts />
+                </Suspense>
+              ),
             },
           ],
         },
         {
           path: "cart/my-cart",
           loader: cartLoader,
-          element: <Cart uid={user} />,
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Cart uid={user} />
+            </Suspense>
+          ),
         },
         {
           path: "cart/my-cart/save-for-later/:uid",
           loader: cartLoader,
-          element: <SaveForLater />,
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <SaveForLater />
+            </Suspense>
+          ),
         },
       ],
     },

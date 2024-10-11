@@ -1,10 +1,7 @@
-// import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import "./css/MyProductsCard.css";
 
 export default function MyProducts({ uid }) {
-  // const [myProds, setMyProds] = useState([]);
-
   const myProds = useLoaderData();
 
   async function addToCart(prodId) {
@@ -21,30 +18,28 @@ export default function MyProducts({ uid }) {
         },
       });
     } catch (error) {
-      console.log("could not add to cart....!!! " + error);
+      console.error("Could not add to cart:", error);
     }
   }
 
+  if (myProds.length === 0) {
+    return <div>No Products to show..!</div>;
+  }
+
   return (
-    <>
-      <div className="book-card">
-        <div className="card">
-          {myProds.length !== 0
-            ? myProds.map((prod) => (
-                <li key={prod._id}>
-                  <img src={prod.url} />
-                  <h1>{prod.title + " - $" + prod.price}</h1>
-                  <strong>writtern by </strong>
-                  <p>{prod.author}</p>
-                  <h3>{prod.desc}</h3>
-                  <button onClick={() => addToCart(prod._id)}>
-                    Add to Cart
-                  </button>
-                </li>
-              ))
-            : "No Products to show..!!"}
-        </div>
+    <div className="book-card">
+      <div className="card">
+        {myProds.map((prod) => (
+          <li key={prod._id}>
+            <img src={prod.url} loading="lazy" alt={prod.title} />
+            <h1>{prod.title + " - $" + prod.price}</h1>
+            <strong>written by </strong>
+            <p>{prod.author}</p>
+            <h3>{prod.desc}</h3>
+            <button onClick={() => addToCart(prod._id)}>Add to Cart</button>
+          </li>
+        ))}
       </div>
-    </>
+    </div>
   );
 }

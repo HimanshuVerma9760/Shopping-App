@@ -109,3 +109,53 @@ exports.getSaveForLater = async (req, res, next) => {
     res.json({ message: "No Items Currently..!!" });
   }
 };
+
+exports.deleteItem = async (req, res, next) => {
+  const prodId = req.params.prodId;
+
+  try {
+    const cart = await Cart.findOne({ "products.product": prodId }).populate(
+      "products.product"
+    );
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart item not found" });
+    }
+
+    const productIndex = cart.products.findIndex(
+      (item) => item.product._id.toString() === prodId
+    );
+
+    if (productIndex === -1) {
+      return res.status(404).json({ message: "Product not found in cart" });
+    }
+    //ss
+    // ... other code ...
+
+    const productPrice = cart.products[productIndex].product.price;
+    const productQuantity = cart.products[productIndex].quantity; // Get the quantity before splicing
+
+    cart.totalPrice =
+      cart.products.reduce(
+        (sum, item) => sum + item.product.price * item.quantity,
+        0
+      ) -
+      productPrice * productQuantity; // Use productQuantity here
+
+    cart.products.splice(productIndex, 1);
+
+    cart.totalQuantity = cart.products.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+
+    // ... other code ...
+
+    await cart.save();
+
+    res.status(200).json({ message: "Item removed from cart" });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).json({ message: "Failed to delete item" });
+  }
+};
