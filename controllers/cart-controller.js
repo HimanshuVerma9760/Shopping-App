@@ -129,18 +129,16 @@ exports.deleteItem = async (req, res, next) => {
     if (productIndex === -1) {
       return res.status(404).json({ message: "Product not found in cart" });
     }
-    //ss
-    // ... other code ...
 
     const productPrice = cart.products[productIndex].product.price;
-    const productQuantity = cart.products[productIndex].quantity; // Get the quantity before splicing
+    const productQuantity = cart.products[productIndex].quantity;
 
     cart.totalPrice =
       cart.products.reduce(
         (sum, item) => sum + item.product.price * item.quantity,
         0
       ) -
-      productPrice * productQuantity; // Use productQuantity here
+      productPrice * productQuantity;
 
     cart.products.splice(productIndex, 1);
 
@@ -148,8 +146,6 @@ exports.deleteItem = async (req, res, next) => {
       (sum, item) => sum + item.quantity,
       0
     );
-
-    // ... other code ...
 
     await cart.save();
 
